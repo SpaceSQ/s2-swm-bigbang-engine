@@ -1,0 +1,4 @@
+# S2-SWM Big Bang Engine Dependencies
+# 遵循 OpenClaw 零信任安全沙盒规范
+# 当前核心仿真引擎仅依赖 Python 标准库 (json, logging, uuid, time)
+# 无需额外安装外部网络依赖。
