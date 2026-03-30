@@ -1,5 +1,5 @@
 ```markdown
-# 🌌 S2-SWM 宇宙大爆炸引擎 (V3.1.1) 
+# 🌌 S2-SWM 宇宙大爆炸引擎 (V3.1.0) 
 传统 AI 正在内卷前四种模型（文本流、纯视觉像素流、单一车端具身、虚拟游戏引擎），而 S2-SWM 开辟了第五种世界模型派系：彻底摒弃“像素即世界”的幻觉，以 SSSU (空间基元) 为原子，将世界锚定于真实的 14 维物理张量与生命主观能动性的因果链中。
 
 [![Openclaw Plugin](https://img.shields.io/badge/Plugin-Openclaw_Native-blue.svg)](https://github.com/SpaceSQ/s2-swm-bigbang-engine)
@@ -24,6 +24,7 @@
 ```text
 s2-swm-bigbang-engine/
 ├── package.json                  # 指定代码插件清单
+├── openclaw.plugin.json          # openclaw指定代码插件清单
 ├── requirements.txt              # Python 引擎依赖清单
 ├── s2_14d_tensor.py              # 14 维度物理要素发生器 
 ├── s2_tdog_engine.py             # TDOG 动态造物引擎 (万物生物理渲染)

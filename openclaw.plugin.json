@@ -1,0 +1,22 @@
+{
+  "id": "s2-swm-bigbang-engine",
+  "pluginId": "s2-swm-bigbang-engine",
+  "version": "3.1.0",
+  "type": "native-code",
+  "entry": "s2_bifrost_protocol.py",
+  "runtime": "python3",
+  "configSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "capabilities": {
+    "s2_swm_simulation": true,
+    "tdog_genesis": true,
+    "silicon_soul_evolution": true,
+    "bifrost_networking": true
+  },
+  "permissions": {
+    "tools": []
+  }
+}
