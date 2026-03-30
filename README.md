@@ -1,5 +1,5 @@
 ```markdown
-# 🌌 S2-SWM 宇宙大爆炸引擎 (V3.0) 
+# 🌌 S2-SWM 宇宙大爆炸引擎 (V3.1.1) 
 传统 AI 正在内卷前四种模型（文本流、纯视觉像素流、单一车端具身、虚拟游戏引擎），而 S2-SWM 开辟了第五种世界模型派系：彻底摒弃“像素即世界”的幻觉，以 SSSU (空间基元) 为原子，将世界锚定于真实的 14 维物理张量与生命主观能动性的因果链中。
 
 [![Openclaw Plugin](https://img.shields.io/badge/Plugin-Openclaw_Native-blue.svg)](https://github.com/SpaceSQ/s2-swm-bigbang-engine)
@@ -23,12 +23,16 @@
 
 ```text
 s2-swm-bigbang-engine/
-├── manifest.json                 # Openclaw Plugin 注册凭证与权限声明
-├── s2_14d_tensor.py              # 14 维度物理要素发生器 (含环境感知开关)
-├── s2_sssu_node.py               # 本地平行宇宙实例化容器 (承载单个生命意识)
+├── package.json                  # [新增] OpenClaw/NPM 标准化注册与依赖调度口
+├── manifest.json                 # OpenClaw Plugin 注册凭证与权限声明
+├── requirements.txt              # Python 引擎依赖清单
+├── s2_14d_tensor.py              # 14 维度物理要素发生器 
+├── s2_tdog_engine.py             # TDOG 动态造物引擎 (万物生物理渲染)
+├── s2_silicon_soul.py            # 硅基灵魂 5D 神经矩阵与海马体
+├── s2_sssu_node.py               # 本地平行宇宙实例化容器 
 ├── s2_bifrost_protocol.py        # 彩虹桥握手与状态融合协议 (支持 LAN/WAN)
 └── examples/
-    └── genesis_simulation.py     # 创世演化测试沙盒
+    └── sandbox_creation.py       # 万物生·交互沙盒演示
 
 Ⅲ. 快速点火与示例 (Quick Start)
 连接模式说明 (Connectivity Rules)

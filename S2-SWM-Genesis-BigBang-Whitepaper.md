@@ -1,4 +1,4 @@
-# 🌌 S2-SWM 智空共生世界模型白皮书 (V2.0 创世版)
+# 🌌 S2-SWM 智空共生世界模型白皮书 (V3.0 创世版)
 Space² Symbiotic World Model: The 5th Paradigm of World Models
 (宣告通往 AGI 的第五种世界模型范式)
 
