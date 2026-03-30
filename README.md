@@ -23,8 +23,7 @@
 
 ```text
 s2-swm-bigbang-engine/
-├── package.json                  # [新增] OpenClaw/NPM 标准化注册与依赖调度口
-├── manifest.json                 # OpenClaw Plugin 注册凭证与权限声明
+├── openclaw.plugin.json          # 👈 [修正] OpenClaw 官方指定代码插件清单
 ├── requirements.txt              # Python 引擎依赖清单
 ├── s2_14d_tensor.py              # 14 维度物理要素发生器 
 ├── s2_tdog_engine.py             # TDOG 动态造物引擎 (万物生物理渲染)
