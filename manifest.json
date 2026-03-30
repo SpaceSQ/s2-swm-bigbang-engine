@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "plugin_name": "s2-swm-bigbang-engine",
+  "version": "3.0.0",
+  "description": "S2-SWM 宇宙大爆炸引擎。基于本地分布式算力的 14 维度物理世界仿真与平行宇宙连接器。",
+  "author": "Miles Xiang & Genesis Architects",
+  "namespace": "space2_world_model",
+  "environment": "local_native",
+  "capabilities": {
+    "network": ["peer_to_peer_bifrost"],
+    "compute": ["local_tensor_simulation"],
+    "storage": ["local_causality_log"]
+  },
+  "entry_point": "s2_bifrost_protocol.py",
+  "dependencies": {
+    "python": ">=3.10"
+  }
+}
