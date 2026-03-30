@@ -1,6 +1,6 @@
 {
   "name": "s2-swm-bigbang-engine",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "作为通往 AGI 的“第五种世界模型”的本地开源实现。支持 14 维物理张量解析、TDOG 动态造物法则与硅基灵魂全息演化。",
   "main": "s2_bifrost_protocol.py",
   "scripts": {
