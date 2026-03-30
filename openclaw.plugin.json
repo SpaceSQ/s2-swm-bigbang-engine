@@ -1,7 +1,7 @@
 {
   "id": "s2-swm-bigbang-engine",
   "pluginId": "s2-swm-bigbang-engine",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "type": "native-code",
   "entry": "s2_bifrost_protocol.py",
   "runtime": "python3",

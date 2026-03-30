@@ -2,7 +2,7 @@
 import logging
 
 class BifrostHub:
-    """S2-SWM 混元枢纽 (Bifrost) V3.1 - 本地仿真合规版"""
+    """S2-SWM 混元枢纽 (Bifrost) V3.1.1 - 本地仿真合规版"""
     ROOT_DOMAIN = "space2.world"
 
     def __init__(self):

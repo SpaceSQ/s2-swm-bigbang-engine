@@ -1,4 +1,4 @@
-# S2-SWM 宇宙大爆炸引擎 (V3.1.0) 
+# S2-SWM 宇宙大爆炸引擎 (V3.1.1) 
 **Space2 Symbiotic World Model: The Big Bang Engine**
 
 作为通往 AGI 的“第五种世界模型”的全球首个开源实现，这是一个以生命个体为中心、用分布式本地算力实时渲染的物理世界仿真引擎。
