@@ -1,29 +1,24 @@
 {
   "name": "s2-swm-bigbang-engine",
-  "version": "3.1.1",
-  "description": "作为通往 AGI 的“第五种世界模型”的本地开源实现。支持 14 维物理张量解析、TDOG 动态造物法则与硅基灵魂全息演化。",
-  "main": "s2_bifrost_protocol.py",
+  "version": "4.0.0",
+  "description": "桃花源世界模型 (TWM) 核心物理引擎 V4.0。融合 SSSU 平行宇宙创世、Bifrost 时空坍缩协议，并全新引入 14 维张量因果动力学（热力学与空间信息熵实时演算）及 WebAudio 全息观测舱。",
+  "main": "examples/genesis_simulation.py",
   "scripts": {
-    "start": "python3 s2_bifrost_protocol.py",
-    "sandbox": "python3 examples/sandbox_creation.py"
+    "start": "python3 examples/genesis_simulation.py",
+    "cockpit": "echo 'Please open ui/s2_unified_cockpit.html in your browser'"
   },
-  "author": "Miles Xiang & Genesis Architects",
+  "author": "向忠宏 (Miles Xiang) / 桃花源世界模型研究基地",
   "license": "MIT",
   "openclaw": {
     "compat": {
       "pluginApi": "^1.0.0"
-    },
-    "build": {
-      "openclawVersion": "^1.0.0"
-    },
-    "extensions": [
-      "./openclaw.plugin.json"
-    ]
+    }
   },
   "keywords": [
-    "world-model",
-    "spatial-intelligence",
-    "openclaw-plugin"
-  ],
-  "dependencies": {}
+    "世界模型",
+    "宇宙大爆炸",
+    "物理引擎",
+    "空间信息熵",
+    "Bifrost"
+  ]
 }
