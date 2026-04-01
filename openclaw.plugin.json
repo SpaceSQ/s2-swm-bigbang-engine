@@ -1,9 +1,9 @@
 {
   "id": "s2-swm-bigbang-engine",
   "pluginId": "s2-swm-bigbang-engine",
-  "version": "4.0.0",
+  "version": "4.0.2",
   "type": "native-code",
-  "entry": "s2_causal_dynamics.py",
+  "entry": "examples/genesis_simulation.py",
   "runtime": "python3",
   "configSchema": {
     "type": "object",
@@ -12,26 +12,8 @@
         "type": "string",
         "default": "EARTH_RESIDENTIAL",
         "description": "初始物理法则基态 (EARTH_RESIDENTIAL / DEEP_SPACE)"
-      },
-      "tick_rate_ms": {
-        "type": "number",
-        "default": 1000,
-        "description": "物理引力场演算的心跳频率"
       }
     },
     "required": ["default_env_mode"]
-  },
-  "capabilities": {
-    "14d_tensor_simulation": true,
-    "spatial_entropy_calculation": true,
-    "bifrost_wan_fusion": true,
-    "thermodynamic_causality": true
-  },
-  "permissions": {
-    "tools": [
-      "read_spatial_tensor",
-      "mutate_reality_tensor",
-      "trigger_bifrost_handshake"
-    ]
   }
 }

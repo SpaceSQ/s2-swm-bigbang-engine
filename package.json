@@ -1,7 +1,7 @@
 {
   "name": "s2-swm-bigbang-engine",
-  "version": "4.0.0",
-  "description": "桃花源世界模型 (TWM) 核心物理引擎 V4.0。融合 SSSU 平行宇宙创世、Bifrost 时空坍缩协议，并全新引入 14 维张量因果动力学（热力学与空间信息熵实时演算）及 WebAudio 全息观测舱。",
+  "version": "4.0.2",
+  "description": "桃花源世界模型 (TWM) 核心物理引擎 V4.0。本地物理引擎仿真模式 (Local Simulation Mode)。纯 Python 原生实现 14 维张量因果动力学。",
   "main": "examples/genesis_simulation.py",
   "scripts": {
     "start": "python3 examples/genesis_simulation.py",
@@ -24,8 +24,7 @@
     "世界模型",
     "宇宙大爆炸",
     "物理引擎",
-    "空间信息熵",
-    "Bifrost"
+    "Local-Simulation"
   ],
   "dependencies": {}
 }
