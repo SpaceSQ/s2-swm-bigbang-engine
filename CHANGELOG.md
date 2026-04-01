@@ -1,6 +1,6 @@
 # 变更日志 (Changelog) - S2 宇宙大爆炸引擎
 
-## [4.0.0] - 2026-04-01 (Causal Dynamics Edition)
+## [4.0.2] - 2026-04-01 (Causal Dynamics Edition)
 ### 🚀 史诗级重构 (Epic Rework)
 - **引入时间之箭 (Big Bang Tick)**：物理张量不再是静态字典，`s2_causal_dynamics.py` 引入了热力学与流体力学演算，物理场随时间进行因果演化与热寂衰减。
 - **空间信息熵 (Spatial Entropy)**：新增第一性原理计算模块，将温度、流体、震动等多维数据融合为 0~1 的空间混乱度终极指标。
