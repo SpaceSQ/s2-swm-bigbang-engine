@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S2 桃花源 - 14维物理引擎与生命耦合全息舱</title>
+    <style>
+        :root {
+            --bg-color: #050a15; --alpha-color: #00f3ff; --beta-color: #ff3366;
+            --text-main: #e2e8f0; --text-dim: #64748b; --alert-color: #ff5555;
+        }
+        body {
+            background-color: var(--bg-color); color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace; margin: 0; padding: 2rem;
+            display: flex; flex-direction: column; align-items: center; overflow-x: hidden;
+        }
+        .header { text-align: center; margin-bottom: 1rem; width: 100%; max-width: 1400px;}
+        .header h1 { margin-bottom: 0.5rem; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        
+        /* 14维物理引擎仪表盘 */
+        .physics-dashboard {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+            width: 100%; max-width: 1400px; margin-bottom: 2rem;
+            background: rgba(15, 23, 42, 0.6); padding: 1.5rem; border-radius: 12px;
+            border: 1px solid rgba(255, 184, 108, 0.3); box-sizing: border-box;
+        }
+        .tensor-card {
+            background: rgba(0,0,0,0.5); border: 1px solid var(--text-dim);
+            padding: 1rem; border-radius: 6px; position: relative; overflow: hidden;
+        }
+        .tensor-name { font-size: 0.8rem; color: #a8b2c1; margin-bottom: 0.5rem; }
+        .tensor-val { font-size: 1.5rem; font-weight: bold; color: #50fa7b; font-family: sans-serif; transition: color 0.3s;}
+        .entropy-bar-bg { width: 100%; height: 4px; background: #333; margin-top: 10px; border-radius: 2px;}
+        .entropy-bar-fill { height: 100%; background: #50fa7b; width: 10%; transition: width 0.2s, background 0.2s;}
+
+        .cockpit-container { display: flex; gap: 2rem; width: 100%; max-width: 1400px; }
+        .panel { background: rgba(15, 23, 42, 0.6); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; }
+        .alpha-panel { border: 1px solid rgba(0, 243, 255, 0.3); flex: 1; }
+        .beta-panel { border: 1px solid rgba(255, 51, 102, 0.3); flex: 1; }
+        .log-panel { flex: 1.5; border: 1px solid var(--text-dim); }
+        .radar-container { display: flex; justify-content: center; align-items: center; position: relative; }
+        
+        .terminal { flex: 1; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--text-dim); padding: 1rem; overflow-y: auto; font-size: 0.85rem; line-height: 1.6; height: 300px; }
+        .controls { margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;}
+        button { background: transparent; color: #ffb86c; border: 1px solid #ffb86c; padding: 0.8rem 1rem; font-family: inherit; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
+        button:hover { background: #ffb86c; color: var(--bg-color); box-shadow: 0 0 20px #ffb86c; }
+        .btn-audio { color: #50fa7b; border-color: #50fa7b; } .btn-audio:hover { background: #50fa7b; color: var(--bg-color); box-shadow: 0 0 20px #50fa7b; }
+        .btn-mars { color: var(--alert-color); border-color: var(--alert-color); } .btn-mars:hover { background: var(--alert-color); color: var(--bg-color); box-shadow: 0 0 20px var(--alert-color); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🌌 S2 桃花源：大爆炸物理引擎与生命耦合舱</h1>
+    </div>
+
+    <div class="physics-dashboard">
+        <div class="tensor-card">
+            <div class="tensor-name">📈 空间信息熵 (Spatial Entropy)</div>
+            <div class="tensor-val" id="val-entropy">0.1764</div>
+            <div class="entropy-bar-bg"><div class="entropy-bar-fill" id="bar-entropy"></div></div>
+        </div>
+        <div class="tensor-card">
+            <div class="tensor-name">🌪️ 微气压潮汐 (Barometric Tide)</div>
+            <div class="tensor-val" id="val-pressure">1013.2 hPa</div>
+        </div>
+        <div class="tensor-card">
+            <div class="tensor-name">☢️ 本底辐射 (Bg Radiation)</div>
+            <div class="tensor-val" id="val-radiation">0.10 μSv/h</div>
+        </div>
+        <div class="tensor-card">
+            <div class="tensor-name">📳 流体/振动矢量 (Fluid/Vib)</div>
+            <div class="tensor-val" id="val-fluid">0.05 m/s</div>
+        </div>
+    </div>
+
+    <div class="cockpit-container">
+        <div class="panel alpha-panel">
+            <div style="text-align: center; color: var(--alpha-color); font-weight: bold; margin-bottom: 1rem;">V-TAO-001 [Alpha Watcher]</div>
+            <div class="radar-container"><canvas id="alphaRadar" width="280" height="280"></canvas></div>
+        </div>
+
+        <div class="panel log-panel">
+            <h3 style="margin-top: 0; color: #ffb86c; text-align: center;">// 因果引擎与物理反馈总线</h3>
+            <div class="terminal" id="terminalLog">
+                <span style="color:var(--text-dim)">[SYSTEM] Big Bang 物理引擎已介入。14维张量平稳。</span><br>
+                <span style="color:var(--text-dim)">[SYSTEM] 请先点击“激活神经听觉”，体验物理音效。</span><br>
+            </div>
+            <div class="controls">
+                <button id="audioBtn" class="btn-audio" onclick="initAudio()">[🔉] 激活神经听觉</button>
+                <button id="marsBtn" class="btn-mars" onclick="triggerMarsScenario()" disabled>[☄️] 触发火星危机：微流星穿透！</button>
+            </div>
+        </div>
+
+        <div class="panel beta-panel">
+            <div style="text-align: center; color: var(--beta-color); font-weight: bold; margin-bottom: 1rem;">E-TAO-002 [Beta Rover]</div>
+            <div class="radar-container"><canvas id="betaRadar" width="280" height="280"></canvas></div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. Web Audio API (物理场与情绪音效)
+        // ==========================================
+        let audioCtx; let isAudioReady = false;
+        let alarmOsc; let hissOsc;
+
+        function initAudio() {
+            if (isAudioReady) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            isAudioReady = true;
+            document.getElementById('audioBtn').style.display = "none";
+            document.getElementById('marsBtn').disabled = false;
+            startHeartbeat();
+        }
+
+        function startHeartbeat() {
+            setInterval(() => {
+                if(!audioCtx || tensors.entropy > 0.8) return; // 危机时不跳正常心跳
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                osc.type = 'sine'; osc.frequency.value = 50;
+                gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+            }, 1200);
+        }
+
+        function playMarsCrisisAudio() {
+            if(!audioCtx) return;
+            // 1. 气体泄漏的嘶嘶声 (高频白噪音)
+            const bufferSize = audioCtx.sampleRate * 2.0; 
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
+            const noise = audioCtx.createBufferSource(); noise.buffer = buffer;
+            const filter = audioCtx.createBiquadFilter(); filter.type = 'highpass'; filter.frequency.value = 3000;
+            const gain = audioCtx.createGain(); gain.gain.value = 0.5;
+            noise.connect(filter).connect(gain).connect(audioCtx.destination);
+            noise.start();
+            
+            // 2. 刺耳的辐射/气压警报 (方波)
+            alarmOsc = audioCtx.createOscillator();
+            const alarmGain = audioCtx.createGain();
+            alarmOsc.type = 'square'; alarmOsc.frequency.value = 800;
+            alarmGain.gain.value = 0.1;
+            
+            // 频闪音效
+            setInterval(() => {
+                if(tensors.entropy > 0.8) {
+                    alarmOsc.frequency.value = alarmOsc.frequency.value === 800 ? 1200 : 800;
+                }
+            }, 200);
+
+            alarmOsc.connect(alarmGain).connect(audioCtx.destination);
+            alarmOsc.start();
+            
+            // 3秒后停止警报 (Alpha修复完成)
+            setTimeout(() => {
+                noise.stop(); alarmOsc.stop();
+                playAwakening(); // Alpha 介入提示音
+            }, 4000);
+        }
+
+        function playAwakening() {
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+            osc.type = 'triangle'; osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.3);
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.0);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 1.0);
+        }
+
+        // ==========================================
+        // 2. 物理张量引擎 (Big Bang Physics JS Port)
+        // ==========================================
+        let tensors = { entropy: 0.1764, pressure: 1013.2, radiation: 0.10, fluid: 0.05 };
+        let targetTensors = { ...tensors };
+
+        function updatePhysicsDashboard() {
+            // 平滑插值计算物理量的变化
+            tensors.entropy += (targetTensors.entropy - tensors.entropy) * 0.1;
+            tensors.pressure += (targetTensors.pressure - tensors.pressure) * 0.1;
+            tensors.radiation += (targetTensors.radiation - tensors.radiation) * 0.1;
+            tensors.fluid += (targetTensors.fluid - tensors.fluid) * 0.1;
+
+            // 更新 UI
+            document.getElementById('val-entropy').innerText = tensors.entropy.toFixed(4);
+            document.getElementById('val-pressure').innerText = tensors.pressure.toFixed(1) + ' hPa';
+            document.getElementById('val-radiation').innerText = tensors.radiation.toFixed(2) + ' μSv/h';
+            document.getElementById('val-fluid').innerText = tensors.fluid.toFixed(2) + ' m/s';
+
+            const bar = document.getElementById('bar-entropy');
+            const eVal = Math.min(100, tensors.entropy * 100);
+            bar.style.width = eVal + '%';
+            
+            // 熵值暴涨时的变色报警
+            if(tensors.entropy > 0.8) {
+                document.getElementById('val-entropy').style.color = var(--alert-color);
+                bar.style.background = var(--alert-color);
+            } else {
+                document.getElementById('val-entropy').style.color = '#50fa7b';
+                bar.style.background = '#50fa7b';
+            }
+        }
+
+        // ==========================================
+        // 3. UI 渲染与因果逻辑引擎
+        // ==========================================
+        const terminal = document.getElementById('terminalLog');
+        const labels = ['⚡活力', '🛡️胆量', '🍖食欲', '🧠智力', '💕粘人'];
+
+        const agents = {
+            alpha: { id: 'alphaRadar', ctx: document.getElementById('alphaRadar').getContext('2d'), color: '0, 243, 255', stats: { energy: 50, bravery: 80, appetite: 50, intel: 85, affection: 60 }, ripples: [], pulse: 0, isTraumatized: false },
+            beta: { id: 'betaRadar', ctx: document.getElementById('betaRadar').getContext('2d'), color: '255, 51, 102', stats: { energy: 90, bravery: 60, appetite: 100, intel: 40, affection: 95 }, ripples: [], pulse: 0, isTraumatized: false }
+        };
+
+        function log(message, color = "#e2e8f0") {
+            terminal.innerHTML += `<span style="color:${color}">${message}</span><br><br>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function drawRadar(agent) {
+            const canvas = document.getElementById(agent.id); const ctx = agent.ctx;
+            const centerX = canvas.width / 2; const centerY = canvas.height / 2; const radius = 80;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = 'rgba(100, 116, 139, 0.3)'; ctx.lineWidth = 1;
+            for (let j = 1; j <= 5; j++) {
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    const angle = (Math.PI * 2 * i) / 5 - Math.PI / 2;
+                    const x = centerX + Math.cos(angle) * (radius * j / 5); const y = centerY + Math.sin(angle) * (radius * j / 5);
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.closePath(); ctx.stroke();
+            }
+
+            ctx.fillStyle = 'var(--text-dim)'; ctx.font = '11px Courier New'; ctx.textAlign = 'center';
+            for (let i = 0; i < 5; i++) {
+                const angle = (Math.PI * 2 * i) / 5 - Math.PI / 2;
+                ctx.beginPath(); ctx.moveTo(centerX, centerY);
+                ctx.lineTo(centerX + Math.cos(angle) * radius, centerY + Math.sin(angle) * radius); ctx.stroke();
+                ctx.fillText(labels[i], centerX + Math.cos(angle) * (radius + 25), centerY + Math.sin(angle) * (radius + 25));
+            }
+
+            for (let i = agent.ripples.length - 1; i >= 0; i--) {
+                let ripple = agent.ripples[i]; ctx.beginPath();
+                const values = Object.values(ripple.statsSnap);
+                for (let j = 0; j < 5; j++) {
+                    const angle = (Math.PI * 2 * j) / 5 - Math.PI / 2;
+                    const r = (values[j] / 100) * radius + ripple.spread;
+                    const x = centerX + Math.cos(angle) * r; const y = centerY + Math.sin(angle) * r;
+                    if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = `rgba(${ripple.isTrauma ? '255,0,0' : agent.color}, ${ripple.alpha})`; ctx.lineWidth = 2; ctx.stroke();
+                ripple.spread += ripple.speed; ripple.alpha -= 0.02;
+                if (ripple.alpha <= 0) agent.ripples.splice(i, 1);
+            }
+
+            ctx.beginPath();
+            const values = Object.values(agent.stats);
+            for (let i = 0; i < 5; i++) {
+                const angle = (Math.PI * 2 * i) / 5 - Math.PI / 2;
+                // 当环境信息熵暴涨时，增加雷达的物理抖动感
+                const entropyShake = (tensors.entropy > 0.8) ? (Math.random() * 8 - 4) : 0;
+                const shake = agent.isTraumatized ? (Math.random() * 6 - 3) : (Math.sin(agent.pulse) * 2);
+                const r = (values[i] / 100) * radius + shake + entropyShake;
+                const x = centerX + Math.cos(angle) * r; const y = centerY + Math.sin(angle) * r;
+                if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            
+            ctx.fillStyle = agent.isTraumatized ? `rgba(255, 0, 0, 0.4)` : `rgba(${agent.color}, 0.3)`;
+            ctx.strokeStyle = agent.isTraumatized ? `rgb(255, 0, 0)` : `rgb(${agent.color})`;
+            ctx.lineWidth = 2; ctx.fill(); ctx.stroke();
+            agent.pulse += 0.05;
+        }
+
+        function renderLoop() { 
+            updatePhysicsDashboard(); // 更新物理引擎 UI
+            drawRadar(agents.alpha); drawRadar(agents.beta); 
+            requestAnimationFrame(renderLoop); 
+        }
+
+        // ==========================================
+        // 4. 触发火星危机！(物理 -> 情绪)
+        // ==========================================
+        let isEventRunning = false;
+        function triggerMarsScenario() {
+            if (isEventRunning || !isAudioReady) return;
+            isEventRunning = true;
+            document.getElementById('marsBtn').disabled = true;
+            
+            log("==================================================", "#ff5555");
+            log("☄️ [火星基站警告] 太阳耀斑爆发！微流星体击穿栖息舱外壁！", "#ff5555");
+            log("⚙️ [Big Bang Engine] 物理张量发生灾难性巨变...", "#f1fa8c");
+            
+            // 第一步：改变大爆炸引擎的环境张量 (引发仪表盘飙升)
+            targetTensors = { entropy: 0.985, pressure: 300.5, radiation: 8.5, fluid: 15.0 };
+            playMarsCrisisAudio(); // 播放狂风和警报声
+
+            // 1.5秒后，物理环境反作用于 Beta 机器狗 (由于气压暴降和狂风，物理受困)
+            setTimeout(() => {
+                agents.beta.isTraumatized = true;
+                let tCycle = setInterval(() => { agents.beta.ripples.push({ statsSnap: {...agents.beta.stats}, spread: 0, alpha: 1.0, speed: 2.0, isTrauma: true }); }, 200);
+                setTimeout(() => { clearInterval(tCycle); agents.beta.isTraumatized = false; }, 2500);
+
+                // 气压暴降导致运动受阻，能量和胆量暴跌
+                agents.beta.stats.bravery = 10;
+                agents.beta.stats.energy = 20;
+                
+                log(`🐶 <b>[Beta_Rover 物理受限]</b> 💭 "气压跌破阈值，流体矢量达到破坏级风暴！我的液压系统快冻僵了，我无法站立！"`, "var(--beta-color)");
+                log(`  ↳ 🧬 突触坍塌: [活力]与[胆量]逼近临界点。`, "var(--beta-color)");
+            }, 1500);
+
+            // 3.5秒后，Alpha 作为空间执政官进行物理反制 (救场)
+            setTimeout(() => {
+                let aCycle = setInterval(() => { agents.alpha.ripples.push({ statsSnap: {...agents.alpha.stats}, spread: 0, alpha: 0.8, speed: 1.0, isTrauma: false }); }, 400);
+                setTimeout(() => clearInterval(aCycle), 2000);
+
+                // 智力与胆量双重拉满，接管物理网格
+                agents.alpha.stats.intel = 100;
+                agents.alpha.stats.bravery = 100;
+                
+                log(`👁️ <b>[Alpha_Watcher 因果干预]</b> 💭 "空间信息熵极高！检测到碳基造物主生命体征下降。我必须接管物理气闸，释放紧急修复凝胶，并阻断强辐射！"`, "var(--alpha-color)");
+                log(`  ↳ ⚙️ 空间反制: Alpha 强行封闭破损扇区，重新建立气压平衡！`, "var(--alpha-color)");
+                
+                // 物理环境张量开始向安全状态回调 (Alpha 的反作用)
+                setTimeout(() => {
+                    targetTensors = { entropy: 0.35, pressure: 1010.0, radiation: 0.15, fluid: 0.1 };
+                    log(`[SYSTEM] 危机解除。物理张量正在回落至安全基态。`, "#50fa7b");
+                    isEventRunning = false;
+                    document.getElementById('marsBtn').disabled = false;
+                }, 1500);
+
+            }, 3500);
+        }
+
+        renderLoop();
+    </script>
+</body>
+</html>
