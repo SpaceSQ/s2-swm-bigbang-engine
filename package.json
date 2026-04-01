@@ -12,7 +12,13 @@
   "openclaw": {
     "compat": {
       "pluginApi": "^1.0.0"
-    }
+    },
+    "build": {
+      "openclawVersion": "^1.0.0"
+    },
+    "extensions": [
+      "./openclaw.plugin.json"
+    ]
   },
   "keywords": [
     "世界模型",
@@ -20,5 +26,6 @@
     "物理引擎",
     "空间信息熵",
     "Bifrost"
-  ]
+  ],
+  "dependencies": {}
 }
